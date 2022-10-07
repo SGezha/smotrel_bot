@@ -1,5 +1,5 @@
 {
-  "name": "azs_bot",
+  "name": "smotrel_net_bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "start": "npx tsc index.ts && node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "SGezha",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^18.8.3",
