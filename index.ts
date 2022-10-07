@@ -25,7 +25,7 @@ interface anime {
 bot.on("inline_query", async (ctx: any) => {
 	let query: string = ctx.inlineQuery.query
 	try {
-		const response = await fetch('https://olsioradmin.smotrel.net/api/animes?populate=poster&pagination=[pageSize]=50')
+		const response = await fetch('https://olsioradmin.smotrel.net/api/animes?populate=poster&pagination[pageSize]=50')
 		const body = await response.text()
 		const { data } = JSON.parse(body)
 		let animes = data.map(function (anime: any) {
