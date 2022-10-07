@@ -22,7 +22,7 @@ interface anime {
 	url: string;
 }
 
-bot.on("inline_query", async ctx => {
+bot.on("inline_query", async (ctx: any) => {
 	let query: string = ctx.inlineQuery.query
 	try {
 		const response = await fetch('https://olsioradmin.smotrel.net/api/animes?populate=poster&pagination=[pageSize]=50')
@@ -43,7 +43,7 @@ bot.on("inline_query", async ctx => {
 			}
 		})
 		let result: InlineQueryResult[] = animes
-			.filter((anime: anime) => anime.title.includes(query))
+			.filter((anime: anime) => anime.title.toLowerCase().includes(query.toLowerCase()))
 			.map(
 				({ id, title, desc, watched, nowepisode, maxepisodes, stars, date, poster, url }: anime): InlineQueryResult => ({
 					type: "article",
