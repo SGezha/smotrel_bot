@@ -62,7 +62,7 @@ bot.on("inline_query", function (ctx) { return __awaiter(void 0, void 0, void 0,
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 5, , 6]);
-                return [4 /*yield*/, (0, node_fetch_1["default"])('https://olsioradmin.smotrel.net/api/animes?populate=poster&pagination=[pageSize]=50')];
+                return [4 /*yield*/, (0, node_fetch_1["default"])('https://olsioradmin.smotrel.net/api/animes?populate=poster&pagination[pageSize]=50')];
             case 2:
                 response = _a.sent();
                 return [4 /*yield*/, response.text()];
@@ -80,17 +80,18 @@ bot.on("inline_query", function (ctx) { return __awaiter(void 0, void 0, void 0,
                         stars: anime.attributes.stars,
                         date: anime.attributes.date,
                         poster: anime.attributes.poster,
-                        url: anime.attributes.url
+                        url: anime.attributes.url,
+                        tg: anime.attributes.episodes[0].tgLink
                     };
                 });
                 result = animes
-                    .filter(function (anime) { return anime.title.includes(query); })
+                    .filter(function (anime) { return anime.title.toLowerCase().includes(query.toLowerCase()); })
                     .map(function (_a) {
-                    var id = _a.id, title = _a.title, desc = _a.desc, watched = _a.watched, nowepisode = _a.nowepisode, maxepisodes = _a.maxepisodes, stars = _a.stars, date = _a.date, poster = _a.poster, url = _a.url;
+                    var id = _a.id, title = _a.title, desc = _a.desc, watched = _a.watched, nowepisode = _a.nowepisode, maxepisodes = _a.maxepisodes, stars = _a.stars, date = _a.date, poster = _a.poster, url = _a.url, tg = _a.tg;
                     return (__assign({ type: "article", id: id, title: title, description: desc, thumb_url: "https://olsioradmin.smotrel.net".concat(poster.data.attributes.url), input_message_content: {
                             parse_mode: "HTML",
                             message_text: "<a href=\"https://smotrel.net/watch/".concat(url, "\">").concat(title, "</a>\n<b>\u0414\u0430\u0442\u0430 \u043F\u0435\u0440\u0435\u0433\u043B\u044F\u0434\u0443:</b> ").concat(new Date(date).toLocaleDateString(), "\n<b>\u041E\u0446\u0456\u043D\u043A\u0430:</b> ").concat(stars, " \u2B50\n<b>\u0421\u0435\u0440\u0456\u044F:</b> ").concat(nowepisode, "/").concat(maxepisodes, "\n")
-                        } }, telegraf_1.Markup.inlineKeyboard([telegraf_1.Markup.button.url("📺 Дивитися онлайн", "https://smotrel.net/watch/".concat(url))])));
+                        } }, telegraf_1.Markup.inlineKeyboard([telegraf_1.Markup.button.url("📺 Дивитися онлайн", "https://smotrel.net/watch/".concat(url)), telegraf_1.Markup.button.url("⭐ Telegram", "".concat(tg))])));
                 });
                 return [4 /*yield*/, ctx.answerInlineQuery(result)];
             case 4: return [2 /*return*/, _a.sent()];

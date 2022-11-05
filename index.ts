@@ -20,6 +20,7 @@ interface anime {
 	date: string;
 	poster: any;
 	url: string;
+	tg: string;
 }
 
 bot.on("inline_query", async (ctx: any) => {
@@ -39,13 +40,14 @@ bot.on("inline_query", async (ctx: any) => {
 				stars: anime.attributes.stars,
 				date: anime.attributes.date,
 				poster: anime.attributes.poster,
-				url: anime.attributes.url
+				url: anime.attributes.url,
+				tg: anime.attributes.episodes[0].tgLink
 			}
 		})
 		let result: InlineQueryResult[] = animes
 			.filter((anime: anime) => anime.title.toLowerCase().includes(query.toLowerCase()))
 			.map(
-				({ id, title, desc, watched, nowepisode, maxepisodes, stars, date, poster, url }: anime): InlineQueryResult => ({
+				({ id, title, desc, watched, nowepisode, maxepisodes, stars, date, poster, url, tg }: anime): InlineQueryResult => ({
 					type: "article",
 					id,
 					title,
@@ -59,7 +61,7 @@ bot.on("inline_query", async (ctx: any) => {
 <b>Серія:</b> ${nowepisode}/${maxepisodes}
 `,
 					},
-					...Markup.inlineKeyboard([Markup.button.url("📺 Дивитися онлайн", `https://smotrel.net/watch/${url}`)]),
+					...Markup.inlineKeyboard([Markup.button.url("📺 Дивитися онлайн", `https://smotrel.net/watch/${url}`), Markup.button.url("⭐ Telegram", `${tg}`)]),
 				}),
 			)
 		return await ctx.answerInlineQuery(result)
